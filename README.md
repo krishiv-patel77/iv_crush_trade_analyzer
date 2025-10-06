@@ -1,6 +1,6 @@
 # Volatility Crush Trade Analyzer
 
-A comprehensive desktop application for analyzing option straddle strategies with real-time market data integration through the Interactive Brokers TWS API. This tool enables traders to model volatility crush scenarios and evaluate the risk/reward profile of straddle positions before execution.
+A tkinter GUI interface for analyzing option straddle strategies with real-time market data integration through the Interactive Brokers TWS API. 
 
 ![App Screenshot](./app_screenshot.png)
 
@@ -8,16 +8,13 @@ A comprehensive desktop application for analyzing option straddle strategies wit
 
 ## Overview
 
-The **Volatility Crush Trade Analyzer** is designed for options traders seeking to capitalize on implied volatility (IV) compression events, commonly known as “volatility crush.” This phenomenon typically occurs after earnings announcements, major economic releases, or other binary events where uncertainty dissipates rapidly, causing a sharp decline in option premiums regardless of the underlying price movement.
+The **Volatility Crush Trade Analyzer** is designed for options traders seeking to capitalize on implied volatility (IV) compression events, commonly known as “volatility crush.” This phenomenon typically occurs after earnings announcements, major economic releases, or other events where uncertainty builds up and then dissipates rapidly, causing a sharp decline in option premiums regardless of the underlying price movement. 
 
-### What is a Straddle?
+This tool allows you to model volatility crush scenarios for planning trading, and comes with a Greek calculation engine along with PnL metrics. 
 
-A **straddle** is an options strategy that involves simultaneously buying or selling both a call and a put option at the same strike price and expiration date.
+Essentially, you can fetch the current option prices and see the straddle price. Then, you can model a new scenario in which you set a price for the underlying and an IV level. This price and IV you set represent your expectations for those numbers post-earnings. 
 
-* **Long Straddle**: Profits from large price movements in either direction; requires high realized volatility.
-* **Short Straddle**: Profits from range-bound markets and volatility compression; benefits from theta decay.
-
-This application evaluates both strategies by modeling how changes in the underlying price and implied volatility affect position profitability.
+Once you click analyze scenario, it will allow you to see your PnL had you taken a short or long straddle position. 
 
 ---
 
@@ -27,7 +24,6 @@ This application evaluates both strategies by modeling how changes in the underl
 
 * Connects directly to Interactive Brokers TWS/Gateway via the IB API.
 * Fetches historical price data and implied volatility metrics.
-* Automatically calculates current market conditions for target securities.
 
 ### 2. Black-Scholes Option Pricing
 
@@ -66,7 +62,6 @@ Measures sensitivity to underlying price changes.
 
 * Call: `Δ_call = N(d₁)`
 * Put: `Δ_put = N(d₁) - 1`
-* Straddle: Approximately neutral (Δ ≈ 0 for ATM options).
 
 #### Gamma (Γ)
 
@@ -76,7 +71,7 @@ Measures the rate of change in delta relative to changes in the underlying price
 Γ = N'(d₁) / (S·σ·√T)
 ```
 
-High gamma indicates rapid changes in delta.
+High gamma indicates rapid changes in delta. 
 
 #### Vega (ν)
 
@@ -118,7 +113,7 @@ Models “what-if” scenarios to evaluate the impact of volatility changes.
 * Short Straddle: +$4.70 per contract
 * Long Straddle: -$4.70 per contract
 
-This demonstrates that volatility compression can dominate P&L even when the underlying moves favorably.
+This demonstrates that volatility compression can dominate PnL even when the underlying moves favorably. However, a strong underlying move will eat away all vega gains pretty quickly.
 
 ---
 
@@ -154,20 +149,8 @@ Target Profit: $6.70 per contract (≈44%)
 
 ### 2. Risk Management
 
-* **Short Straddle:** Unlimited loss potential (especially on upside).
+* **Short Straddle:** Unlimited loss potential 
 * **Long Straddle:** Maximum loss equals premium paid.
-* **Break-Even Points:**
-
-  * Upside: K + P
-  * Downside: K - P
-* **Position Sizing:** Risk ≤ 2–5% of total portfolio per trade.
-
-### 3. Greek-Based Management
-
-* **Delta:** Hedge when |Δ| > 0.30 to control directional exposure.
-* **Gamma:** Avoid excessive gamma risk near expiration.
-* **Vega:** 1% IV change ≈ Vega × 1 in P&L impact.
-* **Theta:** Exploit positive theta in short-volatility setups.
 
 ---
 
@@ -234,19 +217,6 @@ No Installation required with UV Package Manager; just run the program (see Usag
    * Input new spot and IV.
    * Click “Analyze Scenario.”
    * Review updated P&L and Greeks.
-
----
-
-## Example Workflow: NVDA Earnings Trade (Not real #s)
-
-```
-1. Fetch NVDA data: $145.50, IV: 68%
-2. Set strike: $145.50 (ATM), 7 days to expiry
-3. Current straddle: $16.80
-4. Model scenario: spot $148.00, IV: 38%
-5. New straddle: $9.20
-6. Short straddle P&L: +$7.60 (45%)
-```
 
 ---
 
