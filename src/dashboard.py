@@ -243,7 +243,7 @@ class IVCrushAnalyzer():
         ttk.Entry(scenario_frame, textvariable=self.new_iv_var, width=15, font=("Arial", 10, "bold")).grid(row=1, column=1, sticky=(tk.W, tk.E), pady=(0, 8))
         
         # button for analyzing the new scenario
-        self.analyze_btn = ttk.Button(scenario_frame, text="🔮 Analyze Scenario", command=self.analyze_scenario, state="disabled")
+        self.analyze_btn = ttk.Button(scenario_frame, text="Analyze Scenario", command=self.analyze_scenario, state="disabled")
         self.analyze_btn.grid(row=2, column=0, columnspan=2, pady=(10, 0))
         
 
